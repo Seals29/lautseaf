@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function Home() {
     const [value, setValue] = useState("");
 
-    const handleSliderChange = (newValue: string) => {
+    const handleSliderChange = (newValue: any) => {
         setValue(newValue);
     };
 
