@@ -1,5 +1,5 @@
 "use client";
-import { SetStateAction, useState, Dispatch } from "react";
+import { SetStateAction, useState, Dispatch, useRef } from "react";
 import { Input, Slider } from "@nextui-org/react";
 import Navbar from "seaf/components/navbar";
 import Image from "next/image";
@@ -29,7 +29,17 @@ export default function Home() {
             console.error("Invalid value passed to handleInputChange");
         }
     };
-    
+      // Create a reference for the button click
+  const bottomRef = useRef(null);
+
+  const scrollToBottom = () => {
+    // Scroll the page to the bottom
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
+  };
+
     const [waterSalinity, setWaterSalinity] = useState<number>(0);
     const [waterTemp, setWaterTemp] = useState<number>(0);
     const [potentialDensity, setPotentialDensity] = useState<number>(0);
@@ -62,10 +72,9 @@ export default function Home() {
                 />
 
                 {/* Centered text */}
-                <div className="absolute inset-0 flex items-center justify-center text-black text-5xl text-center z-10">
+                <div className="absolute inset-0 flex items-center justify-center text-black text-7xl text-center z-10 font-bold">
                     <div>
                         Predict Ocean Water
-                        <br />
                         <br />
                         Constituents
                     </div>
@@ -85,7 +94,9 @@ export default function Home() {
                     </p>
                 </div>
                 <div className="mt-2 mb-24">
-                    <button className="border-2 border-white text-white pr-12 pl-12 w-[280px] hover:bg-white hover:text-black transition-all duration-300 p-2">
+                    <button className="border-2 border-white text-white pr-12 pl-12 w-[280px] hover:bg-white hover:text-black transition-all duration-300 p-2"
+                    onClick={scrollToBottom }
+                    >
                         Learn How!
                     </button>
                 </div>

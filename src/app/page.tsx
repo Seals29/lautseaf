@@ -95,18 +95,18 @@ export default function Home() {
                     <div className="absolute inset-0 flex items-center justify-center text-white  text-center z-10 text-3xl flex-col gap-16">
                       <h1>Explore SeaMatrix</h1>
                       <p className="text-sm">Navigate our website and discover everything SeaMatrix has to offer. Jump straight to the sections you're most interested in:</p>
-                      <button className="border-2 border-white text-whitepr-12 pl-12 w-[500px] hover:bg-white hover:text-black transition-all duration-300 p-2">
+                      <a href="./predict" className="border-2 border-white text-whitepr-12 pl-12 w-[500px] hover:bg-white hover:text-black transition-all duration-300 p-2">
   SeaMatrix Prediction Tool
-</button>
-<button className="border-2 border-white text-white pr-12 pl-12 w-[500px] hover:bg-white hover:text-black transition-all duration-300 p-2">
+</a>
+<a href="./learn" className="border-2 border-white text-white pr-12 pl-12 w-[500px] hover:bg-white hover:text-black transition-all duration-300 p-2">
   Learn About the Ocean
-</button>
-<button className="border-2 border-white text-white pr-12 pl-12 w-[500px] hover:bg-white hover:text-black transition-all duration-300 p-2">
+</a>
+<a href="./predict"  className="border-2 border-white text-white pr-12 pl-12 w-[500px] hover:bg-white hover:text-black transition-all duration-300 p-2">
   How to Use Prediction Tool
-</button>
-<button className="border-2 border-white text-white pr-12 pl-12 w-[500px] hover:bg-white hover:text-black transition-all duration-300 p-2">
+</a>
+<a href="./about" className="border-2 border-white text-white pr-12 pl-12 w-[500px] hover:bg-white hover:text-black transition-all duration-300 p-2">
   About SeaMatrix
-</button>
+</a>
 
                         <br />
                         <br />

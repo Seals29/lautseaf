@@ -20,11 +20,9 @@ export default function Home() {
           objectFit="cover" 
         />
 
-        <div className="absolute inset-0 flex items-center justify-center text-black text-7xl  text-center z-10">
+        <div className="absolute inset-0 flex items-center justify-center text-black text-7xl  text-center z-10 font-bold">
           <div>
-            The Ocean: Our Planets
-            <br />
-            Lifeblood
+            About SeaMatrix
           </div>
         </div>
       </div>
