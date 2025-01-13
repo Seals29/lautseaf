@@ -28,22 +28,17 @@ export default function Home() {
 
       {/* Box Card below the image */}
       <div className="flex justify-center p-4">
-        <div className=" text-white p-6 w-[80%] md:w-[60%]">
+        <div className=" text-white p-6 w-[60%] md:w-[40%]">
           {/* Card content */}
-          <h3 className="text-xl font-semibold text-center">About Sea Matrix</h3>
-          <p className="mt-4 text-center font-thin">SeaMatrix is a website created as part of the thesis project.</p>
-          <p className="mt-4 text-center font-bold">"Analysis and Prediction of Ocean Constituents Based on Correlation Between Variables in California Waters."</p>
-          <p className="mt-4 text-center font-thin">This tool represents the Model Deployment stages of the thesis, demonstrating how the predictive model can be utilized in a user-friendly interface.</p>
+          <p className="mt-4 text-center font-thin">The ocean covers over 70% of Earth's surface and plays a crucial role in regulating climate, supporting biodiversity, and providing resources. It is divided into several layers, each with unique characteristics. The ocean is not just a body of water; it’s a dynamic, living system that influences weather patterns, stores carbon, and sustains marine life.</p>
         </div>
       </div>
 
       <div className="flex justify-center p-4">
         <div className=" text-white p-6 w-[80%] md:w-[60%]">
           {/* Card content */}
-          <h3 className="text-xl font-semibold text-center">About Sea Matrix</h3>
-          <p className="mt-4 text-center font-thin">SeaMatrix is a website created as part of the thesis project.</p>
-          <p className="mt-4 text-center font-bold">"Analysis and Prediction of Ocean Constituents Based on Correlation Between Variables in California Waters."</p>
-          <p className="mt-4 text-center font-thin">This tool represents the Model Deployment stages of the thesis, demonstrating how the predictive model can be utilized in a user-friendly interface.</p>
+          <h3 className="text-xl font-semibold text-center">Zones of the Waters</h3>
+          <p className="mt-4 text-center font-thin">The ocean is divided into distinct zones, each with unique environmental characteristics and animal life. These zones are determined by both light penetration and water depth, affecting the type of organisms that can survive there.</p>
         </div>
       </div>
 
@@ -60,11 +55,9 @@ export default function Home() {
         </div>
 
         {/* Text container - right 50% */}
-        <div className="w-1/2 text-center text-white p-6">
-          <h3 className="text-xl font-semibold">About Sea Matrix</h3>
-          <p className="mt-4 font-thin">SeaMatrix is a website created as part of the thesis project.</p>
-          <p className="mt-4 font-bold">"Analysis and Prediction of Ocean Constituents Based on Correlation Between Variables in California Waters."</p>
-          <p className="mt-4 font-thin">This tool represents the Model Deployment stages of the thesis, demonstrating how the predictive model can be utilized in a user-friendly interface.</p>
+        <div className="w-1/2 text-left text-white p-6">
+          <h3 className="text-xl font-semibold">Epipelagic Zone (Sunlit Zone)</h3>
+          <p className="mt-4 font-thin">The top layer of the ocean, extending from the surface to about 200 meters (660 feet) deep. Sunlight penetrates this zone, allowing for photosynthesis and supporting the highest density of marine life. Notable animals include the blue whale (the largest animal on Earth) and the sailfish (known for its speed). You’ll also find schools of mackerel and tuna, and other whales.</p>
         </div>
       </div>
     {/* ---- */}
@@ -73,11 +66,10 @@ export default function Home() {
         
 
         {/* Text container - right 50% */}
-        <div className="w-1/2 text-center text-white p-6">
-          <h3 className="text-xl font-semibold">About Sea Matrix</h3>
+        <div className="w-1/2 text-left text-white p-6">
+          <h3 className="text-xl font-semibold">Mesopelagic Zone (Twilight Zone)</h3>
           <p className="mt-4 font-thin">SeaMatrix is a website created as part of the thesis project.</p>
-          <p className="mt-4 font-bold">"Analysis and Prediction of Ocean Constituents Based on Correlation Between Variables in California Waters."</p>
-          <p className="mt-4 font-thin">This tool represents the Model Deployment stages of the thesis, demonstrating how the predictive model can be utilized in a user-friendly interface.</p>
+          <p className="mt-4 font-thin">Stretching from 200 to about 1,000 meters (3,280 feet) deep, light only penetrates slightly into this zone, creating a twilight atmosphere. Here, you'll find animals like the lanternfish (which uses bioluminescence to navigate the dark) and the cookiecutter shark (named for the unique circular bite marks it leaves on larger animals).</p>
         </div>
         <div className="w-1/2 relative h-[500px]"> {/* Set a specific height */}
           <Image
@@ -102,10 +94,8 @@ export default function Home() {
 
         {/* Text container - right 50% */}
         <div className="w-1/2 text-center text-white p-6">
-          <h3 className="text-xl font-semibold">About Sea Matrix</h3>
-          <p className="mt-4 font-thin">SeaMatrix is a website created as part of the thesis project.</p>
-          <p className="mt-4 font-bold">"Analysis and Prediction of Ocean Constituents Based on Correlation Between Variables in California Waters."</p>
-          <p className="mt-4 font-thin">This tool represents the Model Deployment stages of the thesis, demonstrating how the predictive model can be utilized in a user-friendly interface.</p>
+          <h3 className="text-xl font-semibold">Bathypelagic Zone (Midnight Zone)</h3>
+          <p className="mt-4 font-thin">This zone ranges from 1,000 to about 4,000 meters (13,120 feet) deep. It’s pitch black, with extreme pressure and cold temperatures. Notable animals include the giant squid (which can grow up to 12-14 feet long) and the anglerfish (which uses a bioluminescent lure to attract prey).</p>
         </div>
       </div>
       {/* -- */}
@@ -114,11 +104,9 @@ export default function Home() {
        
 
         {/* Text container - right 50% */}
-        <div className="w-1/2 text-center text-white p-6">
-          <h3 className="text-xl font-semibold">About Sea Matrix</h3>
-          <p className="mt-4 font-thin">SeaMatrix is a website created as part of the thesis project.</p>
-          <p className="mt-4 font-bold">"Analysis and Prediction of Ocean Constituents Based on Correlation Between Variables in California Waters."</p>
-          <p className="mt-4 font-thin">This tool represents the Model Deployment stages of the thesis, demonstrating how the predictive model can be utilized in a user-friendly interface.</p>
+        <div className="w-1/2 text-left text-white p-6">
+          <h3 className="text-xl font-semibold">Abyssopelagic Zone</h3>
+          <p className="mt-4 font-thin">Extending from 4,000 to about 6,000 meters (19,680 feet) deep, it remains pitch black and has freezing temperatures and very high pressure. The creatures found here include the deep-sea anglerfish (known for its glowing lure) and abyssal octopus (which thrives under extreme pressure). </p>
         </div>
         <div className="w-1/2 relative h-[500px]"> {/* Set a specific height */}
           <Image
@@ -142,10 +130,8 @@ export default function Home() {
 
         {/* Text container - right 50% */}
         <div className="w-1/2 text-center text-white p-6">
-          <h3 className="text-xl font-semibold">About Sea Matrix</h3>
-          <p className="mt-4 font-thin">SeaMatrix is a website created as part of the thesis project.</p>
-          <p className="mt-4 font-bold">"Analysis and Prediction of Ocean Constituents Based on Correlation Between Variables in California Waters."</p>
-          <p className="mt-4 font-thin">This tool represents the Model Deployment stages of the thesis, demonstrating how the predictive model can be utilized in a user-friendly interface.</p>
+          <h3 className="text-xl font-semibold">Hadal Zone</h3>
+          <p className="mt-4 font-thin">The deepest part of the ocean, located in deep ocean trenches and exceeding depths of 6,000 meters (19,680 feet). Life here is adapted to extreme conditions, including extreme pressure and minimal oxygen. Notable animals include hadal amphipods (shrimp-like creatures) and hadal worms (which live in deep-sea trenches and are adapted to survive the harsh conditions).</p>
         </div>
       </div>
 
@@ -163,7 +149,7 @@ export default function Home() {
   <Image
     src="/assets/home_tengah.jpg"
     alt="fog"
-    layout="fill" // Makes the image fill the parent container
+    layout="fill" 
     objectFit="cover" // Ensures the image covers the entire container while maintaining its aspect ratio
   />
 

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { Input, Slider } from "@nextui-org/react";
 import Navbar from "seaf/components/navbar";
 import Image from "next/image";
@@ -10,6 +10,10 @@ export default function Home() {
     const handleSliderChange = (newValue: any) => {
         setValue(newValue);
     };
+    const [selectedOption, setSelectedOption] = useState("");
+    const handleDropdownChange = (event: { target: { value: SetStateAction<string>; }; }) =>{
+        setSelectedOption(event.target.value);
+    }
 
     return (
         <div
@@ -68,14 +72,23 @@ export default function Home() {
                     <select
                         id="dropdown"
                         className="border-2 border-white text-white bg-transparent px-6 py-3 mt-2 hover:bg-white hover:text-black transition-all duration-300"
-                        defaultValue="water"
+                        onChange={handleDropdownChange}
+                        defaultValue=""
                     >
                         <option disabled value="">
                             Choose an option
                         </option>
-                        <option value="water salinity">Water Salinity</option>
-                        <option value="2">2. Input the .</option>
-                        <option value="3">3. results.</option>
+                        <option value="waterSalinity">Water Salinity</option>
+                        <option value="oxygenConcentration">Oxygen Concentration</option>
+                        <option value="waterTemperature">Water Temperature</option>
+                        <option value="saturasiOksigen">Saturasi Oksigen (%)</option>
+                        <option value="potentialDensity">Potential Density (kg/m³) </option>
+                        <option value="chlorophyl"> Chlorophyll-a (µg/L)</option>
+                        <option value="phaeophytin">Phaeophytin-a (µg/L)</option>
+                        <option value="phosphate">Phosphate (µmol/L)</option>
+                        <option value="silicate">Silicate (µmol/L)</option>
+                        <option value="nitrite">Nitrite (µmol/L)</option>
+                        <option value="nitrate">Nitrate (µmol/L)</option>
                     </select>
                 </div>
 
@@ -103,103 +116,95 @@ export default function Home() {
           onChange={handleSliderChange} // Use the new handler
           step={1} // Step size
         /> */}
-                <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
-                    <h1 className="text-white font-bold  text-center">
-                        Water Temperature (c)
-                    </h1>
-                    <p className="text-white font-normal text-sm">
-                        {" "}
-                        Typ: 10-30 (EZ), 5-10 (MZ), 0-5 (BZ), 0-2 (AZ), 0-1 (HZ)
-                    </p>
-                    <input
-                        type="text"
-                        value={value}
-                        disabled
-                        style={{
-                            textAlign: "center",
-                            width: "100%",
-                            backgroundColor: "transparent", // Ensures background is transparent
-                        }}
-                        className="rounded-none text-white border-2 p-1 pt-3 pb-3"
-                    />
-                    <Slider
-                        className=""
-                        defaultValue={0}
-                        onChange={handleSliderChange}
-                        label="sda"
-                        maxValue={50}
-                        minValue={-5}
-                        step={0.01}
-                    />
-                </div>
+                {selectedOption === "waterTemperature" && (
+                    <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
+                        <h1 className="text-white font-bold text-center">
+                            Water Temperature (°C)
+                        </h1>
+                        <p className="text-white font-normal text-sm">
+                            Typ: 10-30 (EZ), 5-10 (MZ), 0-5 (BZ), 0-2 (AZ), 0-1 (HZ)
+                        </p>
+                        <input
+                            type="text"
+                            value=""
+                            disabled
+                            style={{
+                                textAlign: "center",
+                                width: "100%",
+                                backgroundColor: "transparent",
+                            }}
+                            className="rounded-none text-white border-2 p-1 pt-3 pb-3"
+                        />
+                        <Slider
+                            defaultValue={0}
+                            onChange={(value) => console.log(value)}
+                            maxValue={50}
+                            minValue={0}
+                            step={0.01}
+                        />
+                    </div>
+                )}
 
-                <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
-                    <h1 className="text-white font-bold text-center ">
-                        Water Salinity (ppt)
-                    </h1>
-                    <p className="text-white font-normal text-sm">
-                        {" "}
-                        Typ: 30-36 (EZ), 34-35.5 (MZ), 34.5-35 (BZ), 34.6-35
-                        (AZ), 35+ (HZ)
-                    </p>
-                    <input
-                        type="text"
-                        value={value}
-                        disabled
-                        style={{
-                            textAlign: "center",
-                            width: "100%",
-                            backgroundColor: "transparent", // Ensures background is transparent
-                        }}
-                        className="rounded-none text-white border-2 p-1 pt-3 pb-3"
-                    />
-                    <Slider
-                        defaultValue={0}
-                        onChange={handleSliderChange}
-                        label="sda"
-                        maxValue={50}
-                        minValue={-5}
-                        step={0.01}
-                    />
-                </div>
+                {selectedOption === "waterSalinity" && (
+                    <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
+                        <h1 className="text-white font-bold text-center">
+                            Water Salinity (ppt)
+                        </h1>
+                        <p className="text-white font-normal text-sm">
+                            Typ: 30-36 (EZ), 34-35.5 (MZ), 34.5-35 (BZ), 34.6-35 (AZ), 35+ (HZ)
+                        </p>
+                        <input
+                            type="text"
+                            value=""
+                            disabled
+                            style={{
+                                textAlign: "center",
+                                width: "100%",
+                                backgroundColor: "transparent",
+                            }}
+                            className="rounded-none text-white border-2 p-1 pt-3 pb-3"
+                        />
+                        <Slider
+                            defaultValue={0}
+                            onChange={(value) => console.log(value)}
+                            maxValue={50}
+                            minValue={0}
+                            step={0.01}
+                        />
+                    </div>
+                )}
 
-                <div
-                    className="flex text-black flex-col gap-2 mt-20 w-[50%]"
-                    style={{
-                        backgroundColor: "#000D1E",
-                    }}
-                >
-                    <h1 className="text-white font-bold  text-center">
-                        Oxygen Concentration (mL/L)
-                    </h1>
-                    <p className="text-white font-normal text-sm">
-                        {" "}
-                        Typ: 6-10 (EZ), 1-6 (MZ), 3-6 (BZ), 4-8 (AZ & HZ)
-                    </p>
-                    <input
-                        type="text"
-                        value={value}
-                        disabled
-                        style={{
-                            textAlign: "center",
-                            width: "100%",
-                            backgroundColor: "transparent", // Ensures background is transparent
-                        }}
-                        className="rounded-none text-white border-2 p-1 pt-3 pb-3"
-                    />
+{selectedOption === "oxygenConcentration" && (
+                    <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
+                        <h1 className="text-white font-bold text-center">
+                            Oxygen Concentration (mL/L)
+                        </h1>
+                        <p className="text-white font-normal text-sm">
+                            Typ: 6-10 (EZ), 1-6 (MZ), 3-6 (BZ), 4-8 (AZ & HZ)
+                        </p>
+                        <input
+                            type="text"
+                            value=""
+                            disabled
+                            style={{
+                                textAlign: "center",
+                                width: "100%",
+                                backgroundColor: "transparent",
+                            }}
+                            className="rounded-none text-white border-2 p-1 pt-3 pb-3"
+                        />
+                        <Slider
+                            defaultValue={0}
+                            onChange={(value) => console.log(value)}
+                            maxValue={50}
+                            minValue={0}
+                            step={0.01}
+                        />
+                    </div>
+                )}
 
-                    <Slider
-                        defaultValue={0}
-                        onChange={handleSliderChange}
-                        label="sda"
-                        maxValue={50}
-                        minValue={-5}
-                        step={0.01}
-                    />
-                </div>
-
-                <div
-                    className="flex text-black flex-col gap-2 mt-20 w-[50%]"
+                {selectedOption === "potentialDensity" && (
+                    <div className="flex text-black flex-col gap-2 mt-20 w-[50%]"
                     style={{
                         backgroundColor: "#000D1E",
                     }}
@@ -233,8 +238,10 @@ export default function Home() {
                         step={0.01}
                     />
                 </div>
+                )}
 
-                <div
+               {selectedOption === "chlorophyl" && (
+                    <div
                     className="flex text-black flex-col gap-2 mt-20 w-[50%]"
                     style={{
                         backgroundColor: "#000D1E",
@@ -269,8 +276,10 @@ export default function Home() {
                         step={0.01}
                     />
                 </div>
+               )}
 
-                <div
+                {selectedOption === "phaeophytin" && (
+                    <div
                     className="flex text-black flex-col gap-2 mt-20 w-[50%]"
                     style={{
                         backgroundColor: "#000D1E",
@@ -304,7 +313,46 @@ export default function Home() {
                         step={0.01}
                     />
                 </div>
-                <div
+                )}
+                {selectedOption === "phosphate" && (
+                    <div
+                    className="flex text-black flex-col gap-2 mt-20 w-[50%]"
+                    style={{
+                        backgroundColor: "#000D1E",
+                    }}
+                >
+                    <h1 className="text-white font-bold  text-center">
+                    Phosphate (µmol/L)
+                    </h1>
+                    <p className="text-white font-normal text-sm">
+                        {" "}
+                        Typ: 0.1-1 (EZ), 1-2 (MZ), 2-3 (BZ), 4+ (AZ & HZ)
+                    </p>
+                    <input
+                        type="text"
+                        value={value}
+                        disabled
+                        style={{
+                            textAlign: "center",
+                            width: "100%",
+                            backgroundColor: "transparent",
+                        }}
+                        className="rounded-none text-white border-2 p-1 pt-3 pb-3"
+                    />
+
+                    <Slider
+                        defaultValue={0}
+                        onChange={handleSliderChange}
+                        label="sda"
+                        maxValue={6}
+                        minValue={0}
+                        step={0.01}
+                    />
+                </div>
+                )}
+                
+               {selectedOption === "silicate" && (
+                    <div
                     className="flex text-black flex-col gap-2 mt-20 w-[50%]"
                     style={{
                         backgroundColor: "#000D1E",
@@ -338,8 +386,11 @@ export default function Home() {
                         step={0.01}
                     />
                 </div>
+               )} 
+               
 
-                <div
+               {selectedOption === "nitrite" && (
+                    <div
                     className="flex text-black flex-col gap-2 mt-20 w-[50%]"
                     style={{
                         backgroundColor: "#000D1E",
@@ -373,8 +424,11 @@ export default function Home() {
                         step={0.01}
                     />
                 </div>
+               )}
 
-                <div
+                {selectedOption === "nitrate" && 
+                (
+                    <div
                     className="flex text-black flex-col gap-2 mt-20 w-[50%]"
                     style={{
                         backgroundColor: "#000D1E",
@@ -408,6 +462,8 @@ export default function Home() {
                         step={0.01}
                     />
                 </div>
+                )
+                }
 
                 <div className="mt-2 mb-24">
                     <button className="border-2 border-white text-white pr-12 pl-12 w-[280px] hover:bg-white hover:text-black transition-all duration-300 p-2 mt-24 ">
