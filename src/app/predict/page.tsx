@@ -1,5 +1,5 @@
 "use client";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useState, Dispatch } from "react";
 import { Input, Slider } from "@nextui-org/react";
 import Navbar from "seaf/components/navbar";
 import Image from "next/image";
@@ -18,14 +18,18 @@ export default function Home() {
         setSelectedOption(event.target.value);
     };
     const handleInputChange = (
-        setter: Dispatch<SetStateAction<number>>,
-        value: string
+        setter: Dispatch<SetStateAction<number>>, // Setter function for state
+        value: number | number[] // Input value can be a number or an array of numbers
     ) => {
-        const numericValue = parseFloat(value); 
-        if (!isNaN(numericValue)) {
-            setter(numericValue); 
+        if (typeof value === "number") {
+            setter(value); // If it's a single number, update the state
+        } else if (Array.isArray(value) && value.length > 0) {
+            setter(value[0]); // If it's an array, use the first value
+        } else {
+            console.error("Invalid value passed to handleInputChange");
         }
     };
+    
     const [waterSalinity, setWaterSalinity] = useState<number>(0);
     const [waterTemp, setWaterTemp] = useState<number>(0);
     const [potentialDensity, setPotentialDensity] = useState<number>(0);
@@ -37,16 +41,15 @@ export default function Home() {
     const [oxygenConc, setOxygenConc] = useState(0);
     const [phosphate, setPhosphate] = useState(0);
     const [oxygenSat, setOxygenSat] = useState(0);
-    
+
     return (
-        
         <div
-        style={{
-            backgroundImage: `url("/assets/home_bawah.jpg")`, 
-            backgroundAttachment: "fixed", 
-            backgroundSize: "cover", 
-            backgroundRepeat: "no-repeat", 
-        }}
+            style={{
+                backgroundImage: `url("/assets/home_bawah.jpg")`,
+                backgroundAttachment: "fixed",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+            }}
             className="text-white"
         >
             <Navbar />
@@ -160,7 +163,7 @@ export default function Home() {
                     />
                     <Slider
                         defaultValue={0}
-                        onChange={(e) =>  handleInputChange(setWaterTemp, e)}
+                        onChange={(e) => handleInputChange(setWaterTemp, e)}
                         maxValue={50}
                         minValue={0}
                         step={0.01}
@@ -169,10 +172,7 @@ export default function Home() {
 
                 {selectedOption === "waterSalinity" && (
                     <>
-                        <div
-                            className="flex text-black flex-col gap-2 mt-20 w-[50%]"
-
-                        >
+                        <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
                             <h1 className="text-white font-bold  text-center">
                                 Chlorophyll-a (µg/L)
                             </h1>
@@ -195,7 +195,9 @@ export default function Home() {
 
                             <Slider
                                 defaultValue={0}
-                                onChange={(e) =>  handleInputChange(setWaterSalinity, e)}
+                                onChange={(e) =>
+                                    handleInputChange(setWaterSalinity, e)
+                                }
                                 label=""
                                 maxValue={50}
                                 minValue={-5}
@@ -224,16 +226,15 @@ export default function Home() {
                             />
                             <Slider
                                 defaultValue={0}
-                                onChange={(e) =>  handleInputChange(setOxygenConc, e)}
+                                onChange={(e) =>
+                                    handleInputChange(setOxygenConc, e)
+                                }
                                 maxValue={50}
                                 minValue={0}
                                 step={0.01}
                             />
                         </div>
-                        <div
-                            className="flex text-black flex-col gap-2 mt-20 w-[50%]"
-
-                        >
+                        <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
                             <h1 className="text-white font-bold  text-center">
                                 Phosphate (µmol/L)
                             </h1>
@@ -256,7 +257,9 @@ export default function Home() {
 
                             <Slider
                                 defaultValue={0}
-                                onChange={(e) =>  handleInputChange(setPhosphate, e)}
+                                onChange={(e) =>
+                                    handleInputChange(setPhosphate, e)
+                                }
                                 label=""
                                 maxValue={6}
                                 minValue={0}
@@ -289,16 +292,15 @@ export default function Home() {
                             />
                             <Slider
                                 defaultValue={0}
-                                onChange={(e) =>  handleInputChange(setWaterSalinity, e)}
+                                onChange={(e) =>
+                                    handleInputChange(setWaterSalinity, e)
+                                }
                                 maxValue={50}
                                 minValue={0}
                                 step={0.01}
                             />
                         </div>
-                        <div
-                            className="flex text-black flex-col gap-2 mt-20 w-[50%]"
-
-                        >
+                        <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
                             <h1 className="text-white font-bold  text-center">
                                 Chlorophyll-a (µg/L)
                             </h1>
@@ -321,17 +323,16 @@ export default function Home() {
 
                             <Slider
                                 defaultValue={0}
-                                onChange={(e) =>  handleInputChange(setChlorophyl, e)}
+                                onChange={(e) =>
+                                    handleInputChange(setChlorophyl, e)
+                                }
                                 label=""
                                 maxValue={50}
                                 minValue={-5}
                                 step={0.01}
                             />
                         </div>
-                        <div
-                            className="flex text-black flex-col gap-2 mt-20 w-[50%]"
-
-                        >
+                        <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
                             <h1 className="text-white font-bold  text-center">
                                 Phosphate (µmol/L)
                             </h1>
@@ -364,9 +365,7 @@ export default function Home() {
                     </>
                 )}
 
-                <div
-                    className="flex text-black flex-col gap-2 mt-20 w-[50%]"
-                >
+                <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
                     <h1 className="text-white font-bold  text-center">
                         Potential Density (kg/m³)
                     </h1>
@@ -389,7 +388,9 @@ export default function Home() {
 
                     <Slider
                         defaultValue={0}
-                        onChange={(e) =>  handleInputChange(setPotentialDensity, e)}
+                        onChange={(e) =>
+                            handleInputChange(setPotentialDensity, e)
+                        }
                         label=""
                         maxValue={50}
                         minValue={-5}
@@ -491,9 +492,7 @@ export default function Home() {
                     </>
                 )}
 
-                <div
-                    className="flex text-black flex-col gap-2 mt-20 w-[50%]"
-                >
+                <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
                     <h1 className="text-white font-bold  text-center">
                         Phaeophytin-a (µg/L)
                     </h1>
@@ -515,7 +514,7 @@ export default function Home() {
 
                     <Slider
                         defaultValue={0}
-                        onChange={(e) =>  handleInputChange(setWaterTemp, e)}
+                        onChange={(e) => handleInputChange(setWaterTemp, e)}
                         label=""
                         maxValue={50}
                         minValue={-5}
@@ -618,9 +617,7 @@ export default function Home() {
                     </>
                 )}
 
-                <div
-                    className="flex text-black flex-col gap-2 mt-20 w-[50%]"
-                >
+                <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
                     <h1 className="text-white font-bold  text-center">
                         Silicate (µmol/L)
                     </h1>
@@ -642,7 +639,7 @@ export default function Home() {
 
                     <Slider
                         defaultValue={0}
-                        onChange={(e) =>  handleInputChange(setSilicate, e)}
+                        onChange={(e) => handleInputChange(setSilicate, e)}
                         label=""
                         maxValue={50}
                         minValue={-5}
@@ -650,9 +647,7 @@ export default function Home() {
                     />
                 </div>
 
-                <div
-                    className="flex text-black flex-col gap-2 mt-20 w-[50%]"
-                >
+                <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
                     <h1 className="text-white font-bold  text-center">
                         Nitrite (µmol/L)
                     </h1>
@@ -674,7 +669,7 @@ export default function Home() {
 
                     <Slider
                         defaultValue={0}
-                        onChange={(e) =>  handleInputChange(setNitrite, e)}
+                        onChange={(e) => handleInputChange(setNitrite, e)}
                         label=""
                         maxValue={50}
                         minValue={-5}
@@ -682,9 +677,7 @@ export default function Home() {
                     />
                 </div>
 
-                <div
-                    className="flex text-black flex-col gap-2 mt-20 w-[50%]"
-                >
+                <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
                     <h1 className="text-white font-bold  text-center">
                         Nitrate (µmol/L)
                     </h1>
@@ -706,7 +699,7 @@ export default function Home() {
 
                     <Slider
                         defaultValue={0}
-                        onChange={(e) =>  handleInputChange(setNitrate, e)}
+                        onChange={(e) => handleInputChange(setNitrate, e)}
                         label=""
                         maxValue={50}
                         minValue={-5}
@@ -714,12 +707,9 @@ export default function Home() {
                     />
                 </div>
 
-                
-                <div
-                    className="flex text-black flex-col gap-2 mt-20 w-[50%]"
-                >
+                <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
                     <h1 className="text-white font-bold  text-center">
-                    Saturasi Oksigen (%)
+                        Saturasi Oksigen (%)
                     </h1>
                     <p className="text-white font-normal text-sm">
                         {" "}
@@ -739,14 +729,13 @@ export default function Home() {
 
                     <Slider
                         defaultValue={0}
-                        onChange={(e) =>  handleInputChange(setOxygenSat, e)}
+                        onChange={(e) => handleInputChange(setOxygenSat, e)}
                         label=""
                         maxValue={110}
                         minValue={0}
                         step={0.01}
                     />
                 </div>
-
 
                 <div className="mt-2 mb-24">
                     <button className="border-2 border-white text-white pr-12 pl-12 w-[280px] hover:bg-white hover:text-black transition-all duration-300 p-2 mt-24 ">
