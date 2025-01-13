@@ -106,16 +106,17 @@ export default function Home() {
                         <option disabled value="">
                             Choose an option
                         </option>
-                        <option value="waterSalinity">Water Salinity</option>
+                        <option value="waterSalinity">Water Salinity (ppt)</option>
                         <option value="chlorophyl">
                             {" "}
                             Chlorophyll-a (µg/L)
                         </option>
                         <option value="phosphate">Phosphate (µmol/L)</option>
                         <option value="oxygenConcentration">
-                            Oxygen Concentration
+                            Oxygen Concentration (mL/L)
                         </option>
                     </select>
+
                 </div>
 
                 <div className="mt-16 pb-2">
@@ -514,7 +515,7 @@ export default function Home() {
 
                     <Slider
                         defaultValue={0}
-                        onChange={(e) => handleInputChange(setWaterTemp, e)}
+                        onChange={(e) => handleInputChange(setPhaeop, e)}
                         label=""
                         maxValue={50}
                         minValue={-5}
@@ -534,7 +535,7 @@ export default function Home() {
                             </p>
                             <input
                                 type="text"
-                                value=""
+                                value={waterSalinity}
                                 disabled
                                 style={{
                                     textAlign: "center",
@@ -545,7 +546,7 @@ export default function Home() {
                             />
                             <Slider
                                 defaultValue={0}
-                                onChange={(value) => console.log(value)}
+                                onChange={(e) => handleInputChange(setWaterSalinity, e)}
                                 maxValue={50}
                                 minValue={0}
                                 step={0.01}
@@ -567,7 +568,7 @@ export default function Home() {
                             </p>
                             <input
                                 type="text"
-                                value={value}
+                                value={chlorophyl}
                                 disabled
                                 style={{
                                     textAlign: "center",
@@ -579,7 +580,7 @@ export default function Home() {
 
                             <Slider
                                 defaultValue={0}
-                                onChange={handleSliderChange}
+                                onChange={(e) => handleInputChange(setChlorophyl, e)}
                                 label=""
                                 maxValue={50}
                                 minValue={-5}
@@ -597,7 +598,7 @@ export default function Home() {
                             </p>
                             <input
                                 type="text"
-                                value=""
+                                value={oxygenConc}
                                 disabled
                                 style={{
                                     textAlign: "center",
@@ -608,7 +609,7 @@ export default function Home() {
                             />
                             <Slider
                                 defaultValue={0}
-                                onChange={(value) => console.log(value)}
+                                onChange={(e) => handleInputChange(setOxygenConc, e)}
                                 maxValue={50}
                                 minValue={0}
                                 step={0.01}
