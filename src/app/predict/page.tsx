@@ -51,7 +51,74 @@ export default function Home() {
     const [oxygenConc, setOxygenConc] = useState(0);
     const [phosphate, setPhosphate] = useState(0);
     const [oxygenSat, setOxygenSat] = useState(0);
+    const [predictRes, setPredictRes] = useState(0);
+    const handleClick = async () => {
+        
+        
+        const apiUrl = "http://127.0.0.1:5000/xgboost/"+ selectedOption;
+    
+        // Define the base payload with all parameters and its type
+        type PayloadType = {
+            water_salinity?: number;
+            chlor_a_micrograms_per_l?: number;
+            water_temp?: number;
+            o2_conc_milimeters_per_liter?: number;
+            o2_sat?: number;
+            potential_density?: number;
+            phaeop_micrograms_per_l?: number;
+            phosphate_micromoles_per_l?: number;
+            silicate_micromoles_per_l?: number;
+            nitrite_micromoles_per_l?: number;
+            nitrate_micromoles_per_l?: number;
+            year_part?: number;
+            month_part_sin?: number;
+            month_part_cos?: number;
+        };
+    
+        const payload: PayloadType = {
+            water_salinity: waterSalinity,
+            chlor_a_micrograms_per_l: chlorophyl,
+            water_temp: waterTemp,
+            o2_conc_milimeters_per_liter: oxygenConc,
+            o2_sat: oxygenSat,
+            potential_density: potentialDensity,
+            phaeop_micrograms_per_l: phaeop,
+            phosphate_micromoles_per_l: phosphate,
+            silicate_micromoles_per_l: silicate,
+            nitrite_micromoles_per_l: nitrite,
+            nitrate_micromoles_per_l: nitrate,
+            year_part: 2025,
+            month_part_sin: 1,
+            month_part_cos: 0,
+        };
 
+    
+
+        console.log(payload)
+        try {
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+    
+            if (response.ok) {
+                const result = await response.json();
+                console.log("API Response:", result.prediction[0]);
+                setPredictRes(result.prediction[0])
+                alert("Request was successful!");
+            } else {
+                console.error("Error:", response.statusText);
+                alert("Failed to get a valid response!");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred while sending the request.");
+        }
+    };
+    
     return (
         <div
             style={{
@@ -441,9 +508,7 @@ export default function Home() {
                         </div>
                         <div
                             className="flex text-black flex-col gap-2 mt-20 w-[50%]"
-                            style={{
-                                backgroundColor: "#000D1E",
-                            }}
+                        
                         >
                             <h1 className="text-white font-bold  text-center">
                                 Phosphate (µmol/L)
@@ -750,7 +815,9 @@ export default function Home() {
                 </div>
 
                 <div className="mt-2 mb-24">
-                    <button className="border-2 border-white text-white pr-12 pl-12 w-[280px] hover:bg-white hover:text-black transition-all duration-300 p-2 mt-24 ">
+                    <button className="border-2 border-white text-white pr-12 pl-12 w-[280px] hover:bg-white hover:text-black transition-all duration-300 p-2 mt-24 "
+                    onClick={handleClick}
+                    >
                         GET PREDICTION
                     </button>
                 </div>
@@ -758,7 +825,7 @@ export default function Home() {
                 <h2>Your Results Are</h2>
                 <div className="mt-2 mb-24">
                     <div className="border-2 border-white text-white pr-14 pl-14 w-[280px] p-2 pt-10 pb-10  ">
-                        XXX
+                        {predictRes}
                     </div>
                 </div>
                 <p>You are mostlikely askdkasd</p>
