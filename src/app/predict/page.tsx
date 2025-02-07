@@ -605,9 +605,6 @@ export default function Home() {
                         </div>
                         <div
                             className="flex text-black flex-col gap-2 mt-20 w-[50%]"
-                            style={{
-                                backgroundColor: "#000D1E",
-                            }}
                         >
                             <h1 className="text-white font-bold  text-center">
                                 Chlorophyll-a (µg/L)
