@@ -55,7 +55,7 @@ export default function Home() {
     const handleClick = async () => {
         
         
-        const apiUrl = "http://127.0.0.1:5000/xgboost/"+ selectedOption;
+        const apiUrl = "http://91.108.111.225:8989/"+ selectedOption;
     
         // Define the base payload with all parameters and its type
         type PayloadType = {
@@ -99,11 +99,14 @@ export default function Home() {
             const response = await fetch(apiUrl, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
+                  "Content-Type": "application/json",
+                  "Access-Control-Allow-Origin": "*",
+                  "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+                  "Access-Control-Allow-Headers": "Content-Type, Authorization"
                 },
                 body: JSON.stringify(payload),
-            });
-    
+              });
+              
             if (response.ok) {
                 const result = await response.json();
                 console.log("API Response:", result.prediction[0]);
