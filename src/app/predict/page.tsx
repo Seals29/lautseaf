@@ -29,16 +29,16 @@ export default function Home() {
             console.error("Invalid value passed to handleInputChange");
         }
     };
-    // Create a reference for the button click
-    const bottomRef = useRef(null);
+      // Create a reference for the button click
+  const bottomRef = useRef(null);
 
-    const scrollToBottom = () => {
-        // Scroll the page to the bottom
-        window.scrollTo({
-            top: document.documentElement.scrollHeight,
-            behavior: "smooth",
-        });
-    };
+  const scrollToBottom = () => {
+    // Scroll the page to the bottom
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
+  };
 
     const [waterSalinity, setWaterSalinity] = useState<number>(0);
     const [waterTemp, setWaterTemp] = useState<number>(0);
@@ -53,72 +53,47 @@ export default function Home() {
     const [oxygenSat, setOxygenSat] = useState(0);
     const [predictRes, setPredictRes] = useState(0);
     const handleClick = async () => {
-        const apiUrl = "http://91.108.111.225:8989/xgboost/" + selectedOption;
-
-        // Define the base payload with all parameters and its type
-        type PayloadType = {
-            water_salinity?: number;
-            chlor_a_micrograms_per_l?: number;
-            water_temp?: number;
-            o2_conc_milimeters_per_liter?: number;
-            o2_sat?: number;
-            potential_density?: number;
-            phaeop_micrograms_per_l?: number;
-            phosphate_micromoles_per_l?: number;
-            silicate_micromoles_per_l?: number;
-            nitrite_micromoles_per_l?: number;
-            nitrate_micromoles_per_l?: number;
-            year_part?: number;
-            month_part_sin?: number;
-            month_part_cos?: number;
+        const payload = {
+          water_salinity: waterSalinity,
+          chlor_a_micrograms_per_l: chlorophyl,
+          water_temp: waterTemp,
+          o2_conc_milimeters_per_liter: oxygenConc,
+          o2_sat: oxygenSat,
+          potential_density: potentialDensity,
+          phaeop_micrograms_per_l: phaeop,
+          phosphate_micromoles_per_l: phosphate,
+          silicate_micromoles_per_l: silicate,
+          nitrite_micromoles_per_l: nitrite,
+          nitrate_micromoles_per_l: nitrate,
+          year_part: 2025,
+          month_part_sin: 1,
+          month_part_cos: 0,
         };
-
-        const payload: PayloadType = {
-            water_salinity: waterSalinity,
-            chlor_a_micrograms_per_l: chlorophyl,
-            water_temp: waterTemp,
-            o2_conc_milimeters_per_liter: oxygenConc,
-            o2_sat: oxygenSat,
-            potential_density: potentialDensity,
-            phaeop_micrograms_per_l: phaeop,
-            phosphate_micromoles_per_l: phosphate,
-            silicate_micromoles_per_l: silicate,
-            nitrite_micromoles_per_l: nitrite,
-            nitrate_micromoles_per_l: nitrate,
-            year_part: 2025,
-            month_part_sin: 1,
-            month_part_cos: 0,
-        };
-
-        console.log(payload);
+      
         try {
-            const response = await fetch(apiUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-                    "Access-Control-Allow-Headers":
-                        "Content-Type, Authorization",
-                },
-                body: JSON.stringify(payload),
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                console.log("API Response:", result.prediction[0]);
-                setPredictRes(result.prediction[0]);
-                alert("Request was successful!");
-            } else {
-                console.error("Error:", response.statusText);
-                alert("Failed to get a valid response!");
-            }
+          const response = await fetch(`/api/proxy?selectedOption=${selectedOption}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          });
+      
+          if (response.ok) {
+            const result = await response.json();
+            console.log("API Response:", result.prediction[0]);
+            setPredictRes(result.prediction[0]);
+            alert("Request was successful!");
+          } else {
+            console.error("Error:", response.statusText);
+            alert("Failed to get a valid response!");
+          }
         } catch (error) {
-            console.error("Error:", error);
-            alert("An error occurred while sending the request.");
+          console.error("Error:", error);
+          alert("An error occurred while sending the request.");
         }
-    };
-
+      };
+    
     return (
         <div
             style={{
@@ -161,9 +136,8 @@ export default function Home() {
                     </p>
                 </div>
                 <div className="mt-2 mb-24">
-                    <button
-                        className="border-2 border-white text-white pr-12 pl-12 w-[280px] hover:bg-white hover:text-black transition-all duration-300 p-2"
-                        onClick={scrollToBottom}
+                    <button className="border-2 border-white text-white pr-12 pl-12 w-[280px] hover:bg-white hover:text-black transition-all duration-300 p-2"
+                    onClick={scrollToBottom }
                     >
                         Learn How!
                     </button>
@@ -185,9 +159,7 @@ export default function Home() {
                         <option disabled value="">
                             Choose an option
                         </option>
-                        <option value="waterSalinity">
-                            Water Salinity (ppt)
-                        </option>
+                        <option value="waterSalinity">Water Salinity (ppt)</option>
                         <option value="chlorophyl">
                             {" "}
                             Chlorophyll-a (µg/L)
@@ -197,6 +169,7 @@ export default function Home() {
                             Oxygen Concentration (mL/L)
                         </option>
                     </select>
+
                 </div>
 
                 <div className="mt-16 pb-2">
@@ -508,7 +481,10 @@ export default function Home() {
                                 step={0.01}
                             />
                         </div>
-                        <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
+                        <div
+                            className="flex text-black flex-col gap-2 mt-20 w-[50%]"
+                        
+                        >
                             <h1 className="text-white font-bold  text-center">
                                 Phosphate (µmol/L)
                             </h1>
@@ -621,9 +597,7 @@ export default function Home() {
                             />
                             <Slider
                                 defaultValue={0}
-                                onChange={(e) =>
-                                    handleInputChange(setWaterSalinity, e)
-                                }
+                                onChange={(e) => handleInputChange(setWaterSalinity, e)}
                                 maxValue={50}
                                 minValue={0}
                                 step={0.01}
@@ -657,9 +631,7 @@ export default function Home() {
 
                             <Slider
                                 defaultValue={0}
-                                onChange={(e) =>
-                                    handleInputChange(setChlorophyl, e)
-                                }
+                                onChange={(e) => handleInputChange(setChlorophyl, e)}
                                 label=""
                                 maxValue={50}
                                 minValue={-5}
@@ -688,9 +660,7 @@ export default function Home() {
                             />
                             <Slider
                                 defaultValue={0}
-                                onChange={(e) =>
-                                    handleInputChange(setOxygenConc, e)
-                                }
+                                onChange={(e) => handleInputChange(setOxygenConc, e)}
                                 maxValue={50}
                                 minValue={0}
                                 step={0.01}
@@ -820,9 +790,8 @@ export default function Home() {
                 </div>
 
                 <div className="mt-2 mb-24">
-                    <button
-                        className="border-2 border-white text-white pr-12 pl-12 w-[280px] hover:bg-white hover:text-black transition-all duration-300 p-2 mt-24 "
-                        onClick={handleClick}
+                    <button className="border-2 border-white text-white pr-12 pl-12 w-[280px] hover:bg-white hover:text-black transition-all duration-300 p-2 mt-24 "
+                    onClick={handleClick}
                     >
                         GET PREDICTION
                     </button>
