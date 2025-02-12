@@ -29,16 +29,16 @@ export default function Home() {
             console.error("Invalid value passed to handleInputChange");
         }
     };
-      // Create a reference for the button click
-  const bottomRef = useRef(null);
+    // Create a reference for the button click
+    const bottomRef = useRef(null);
 
-  const scrollToBottom = () => {
-    // Scroll the page to the bottom
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth',
-    });
-  };
+    const scrollToBottom = () => {
+        // Scroll the page to the bottom
+        window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: "smooth",
+        });
+    };
 
     const [waterSalinity, setWaterSalinity] = useState<number>(0);
     const [waterTemp, setWaterTemp] = useState<number>(0);
@@ -54,46 +54,49 @@ export default function Home() {
     const [predictRes, setPredictRes] = useState(0);
     const handleClick = async () => {
         const payload = {
-          water_salinity: waterSalinity,
-          chlor_a_micrograms_per_l: chlorophyl,
-          water_temp: waterTemp,
-          o2_conc_milimeters_per_liter: oxygenConc,
-          o2_sat: oxygenSat,
-          potential_density: potentialDensity,
-          phaeop_micrograms_per_l: phaeop,
-          phosphate_micromoles_per_l: phosphate,
-          silicate_micromoles_per_l: silicate,
-          nitrite_micromoles_per_l: nitrite,
-          nitrate_micromoles_per_l: nitrate,
-          year_part: 2025,
-          month_part_sin: 1,
-          month_part_cos: 0,
+            water_salinity: waterSalinity,
+            chlor_a_micrograms_per_l: chlorophyl,
+            water_temp: waterTemp,
+            o2_conc_milimeters_per_liter: oxygenConc,
+            o2_sat: oxygenSat,
+            potential_density: potentialDensity,
+            phaeop_micrograms_per_l: phaeop,
+            phosphate_micromoles_per_l: phosphate,
+            silicate_micromoles_per_l: silicate,
+            nitrite_micromoles_per_l: nitrite,
+            nitrate_micromoles_per_l: nitrate,
+            year_part: 2025,
+            month_part_sin: 1,
+            month_part_cos: 0,
         };
-      
+
         try {
-          const response = await fetch(`/api/proxy?selectedOption=${selectedOption}`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-          });
-      
-          if (response.ok) {
-            const result = await response.json();
-            console.log("API Response:", result.prediction[0]);
-            setPredictRes(result.prediction[0]);
-            alert("Request was successful!");
-          } else {
-            console.error("Error:", response.statusText);
-            alert("Failed to get a valid response!");
-          }
+            const response = await fetch(
+                `/api/proxy?selectedOption=${selectedOption}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(payload),
+                }
+            );
+
+            if (response.ok) {
+                const result = await response.json();
+                console.log("API Response:", result.prediction[0]);
+                setPredictRes(result.prediction[0]);
+                alert("Request was successful!");
+            } else {
+                console.error("Error:", response.statusText);
+                alert("Failed to get a valid response!");
+            }
         } catch (error) {
-          console.error("Error:", error);
-          alert("An error occurred while sending the request.");
+            console.error("Error:", error);
+            alert("An error occurred while sending the request.");
         }
-      };
-    
+    };
+
     return (
         <div
             style={{
@@ -136,8 +139,9 @@ export default function Home() {
                     </p>
                 </div>
                 <div className="mt-2 mb-24">
-                    <button className="border-2 border-white text-white pr-12 pl-12 w-[280px] hover:bg-white hover:text-black transition-all duration-300 p-2"
-                    onClick={scrollToBottom }
+                    <button
+                        className="border-2 border-white text-white pr-12 pl-12 w-[280px] hover:bg-white hover:text-black transition-all duration-300 p-2"
+                        onClick={scrollToBottom}
                     >
                         Learn How!
                     </button>
@@ -159,7 +163,9 @@ export default function Home() {
                         <option disabled value="">
                             Choose an option
                         </option>
-                        <option value="waterSalinity">Water Salinity (ppt)</option>
+                        <option value="waterSalinity">
+                            Water Salinity (ppt)
+                        </option>
                         <option value="chlorophyl">
                             {" "}
                             Chlorophyll-a (µg/L)
@@ -169,7 +175,6 @@ export default function Home() {
                             Oxygen Concentration (mL/L)
                         </option>
                     </select>
-
                 </div>
 
                 <div className="mt-16 pb-2">
@@ -219,8 +224,8 @@ export default function Home() {
                         defaultValue={0}
                         onChange={(e) => handleInputChange(setWaterTemp, e)}
                         maxValue={50}
-                        minValue={0}
-                        step={0.01}
+                        minValue={-5}
+                        step={1}
                     />
                 </div>
 
@@ -253,8 +258,8 @@ export default function Home() {
                                     handleInputChange(setWaterSalinity, e)
                                 }
                                 label=""
-                                maxValue={50}
-                                minValue={-5}
+                                maxValue={25}
+                                minValue={0}
                                 step={0.01}
                             />
                         </div>
@@ -283,7 +288,7 @@ export default function Home() {
                                 onChange={(e) =>
                                     handleInputChange(setOxygenConc, e)
                                 }
-                                maxValue={50}
+                                maxValue={15}
                                 minValue={0}
                                 step={0.01}
                             />
@@ -317,13 +322,265 @@ export default function Home() {
                                 label=""
                                 maxValue={6}
                                 minValue={0}
-                                step={0.01}
+                                step={0.001}
                             />
                         </div>
                     </>
                 )}
 
                 {selectedOption === "oxygenConcentration" && (
+                    <>
+                        <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
+                            <h1 className="text-white font-bold text-center">
+                                Water Salinity (ppt)
+                            </h1>
+                            <p className="text-white font-normal text-sm">
+                                Typ: 30-36 (EZ), 34-35.5 (MZ), 34.5-35 (BZ),
+                                34.6-35 (AZ), 35+ (HZ)
+                            </p>
+                            <input
+                                type="text"
+                                value={waterSalinity}
+                                disabled
+                                style={{
+                                    textAlign: "center",
+                                    width: "100%",
+                                    backgroundColor: "transparent",
+                                }}
+                                className="rounded-none text-white border-2 p-1 pt-3 pb-3"
+                            />
+                            <Slider
+                                defaultValue={0}
+                                onChange={(e) =>
+                                    handleInputChange(setWaterSalinity, e)
+                                }
+                                maxValue={45}
+                                minValue={20}
+                                step={0.01}
+                            />
+                        </div>
+                        <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
+                            <h1 className="text-white font-bold  text-center">
+                                Chlorophyll-a (µg/L)
+                            </h1>
+                            <p className="text-white font-normal text-sm">
+                                {" "}
+                                Typ: 0.10-20 (EZ), 0.01-0.1 (MZ), 0-0.01 (BZ),
+                                Near 0 (AZ & HZ)
+                            </p>
+                            <input
+                                type="text"
+                                value={chlorophyl}
+                                disabled
+                                style={{
+                                    textAlign: "center",
+                                    width: "100%",
+                                    backgroundColor: "transparent", // Ensures background is transparent
+                                }}
+                                className="rounded-none text-white border-2 p-1 pt-3 pb-3"
+                            />
+
+                            <Slider
+                                defaultValue={0}
+                                onChange={(e) =>
+                                    handleInputChange(setChlorophyl, e)
+                                }
+                                label=""
+                                maxValue={25}
+                                minValue={0}
+                                step={0.01}
+                            />
+                        </div>
+                        <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
+                            <h1 className="text-white font-bold  text-center">
+                                Phosphate (µmol/L)
+                            </h1>
+                            <p className="text-white font-normal text-sm">
+                                {" "}
+                                Typ: 0.1-1 (EZ), 1-2 (MZ), 2-3 (BZ), 4+ (AZ &
+                                HZ)
+                            </p>
+                            <input
+                                type="text"
+                                value={phosphate}
+                                disabled
+                                style={{
+                                    textAlign: "center",
+                                    width: "100%",
+                                    backgroundColor: "transparent",
+                                }}
+                                className="rounded-none text-white border-2 p-1 pt-3 pb-3"
+                            />
+
+                            <Slider
+                                defaultValue={0}
+                                onChange={handleSliderChange}
+                                label=""
+                                maxValue={6}
+                                minValue={0}
+                                step={0.001}
+                            />
+                        </div>
+                    </>
+                )}
+
+                <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
+                    <h1 className="text-white font-bold  text-center">
+                        Potential Density (kg/m³)
+                    </h1>
+                    <p className="text-white font-normal text-sm">
+                        {" "}
+                        Typ: 19-24 (EZ), 24-27.5 (MZ), 27.5-28 (BZ), 28+ (AZ &
+                        HZ)
+                    </p>
+                    <input
+                        type="text"
+                        value={potentialDensity}
+                        disabled
+                        style={{
+                            textAlign: "center",
+                            width: "100%",
+                            backgroundColor: "transparent", // Ensures background is transparent
+                        }}
+                        className="rounded-none text-white border-2 p-1 pt-3 pb-3"
+                    />
+
+                    <Slider
+                        defaultValue={0}
+                        onChange={(e) =>
+                            handleInputChange(setPotentialDensity, e)
+                        }
+                        label=""
+                        maxValue={35}
+                        minValue={15}
+                        step={0.01}
+                    />
+                </div>
+
+                {selectedOption === "chlorophyl" && (
+                    <>
+                        <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
+                            <h1 className="text-white font-bold text-center">
+                                Water Salinity (ppt)
+                            </h1>
+                            <p className="text-white font-normal text-sm">
+                                Typ: 30-36 (EZ), 34-35.5 (MZ), 34.5-35 (BZ),
+                                34.6-35 (AZ), 35+ (HZ)
+                            </p>
+                            <input
+                                type="text"
+                                value={waterSalinity}
+                                disabled
+                                style={{
+                                    textAlign: "center",
+                                    width: "100%",
+                                    backgroundColor: "transparent",
+                                }}
+                                className="rounded-none text-white border-2 p-1 pt-3 pb-3"
+                            />
+                            <Slider
+                                defaultValue={20}
+                                onChange={(e) =>
+                                    handleInputChange(setWaterSalinity, e)
+                                }
+                                maxValue={45}
+                                minValue={20}
+                                step={0.01}
+                            />
+                        </div>
+                        <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
+                            <h1 className="text-white font-bold  text-center">
+                                Phosphate (µmol/L)
+                            </h1>
+                            <p className="text-white font-normal text-sm">
+                                {" "}
+                                Typ: 0.1-1 (EZ), 1-2 (MZ), 2-3 (BZ), 4+ (AZ &
+                                HZ)
+                            </p>
+                            <input
+                                type="text"
+                                value={value}
+                                disabled
+                                style={{
+                                    textAlign: "center",
+                                    width: "100%",
+                                    backgroundColor: "transparent",
+                                }}
+                                className="rounded-none text-white border-2 p-1 pt-3 pb-3"
+                            />
+
+                            <Slider
+                                defaultValue={0}
+                                onChange={handleSliderChange}
+                                label=""
+                                maxValue={6}
+                                minValue={0}
+                                step={0.001}
+                            />
+                        </div>
+                        <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
+                            <h1 className="text-white font-bold text-center">
+                                Oxygen Concentration (mL/L)
+                            </h1>
+                            <p className="text-white font-normal text-sm">
+                                Typ: 6-10 (EZ), 1-6 (MZ), 3-6 (BZ), 4-8 (AZ &
+                                HZ)
+                            </p>
+                            <input
+                                type="text"
+                                value={oxygenConc}
+                                disabled
+                                style={{
+                                    textAlign: "center",
+                                    width: "100%",
+                                    backgroundColor: "transparent",
+                                }}
+                                className="rounded-none text-white border-2 p-1 pt-3 pb-3"
+                            />
+                            <Slider
+                                defaultValue={0}
+                                onChange={(e) =>
+                                    handleInputChange(setOxygenConc, e)
+                                }
+                                maxValue={15}
+                                minValue={0}
+                                step={0.01}
+                            />
+                        </div>
+                    </>
+                )}
+
+                <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
+                    <h1 className="text-white font-bold  text-center">
+                    Phaeopigments (µg/L)
+                    </h1>
+                    <p className="text-white font-normal text-sm">
+                        {" "}
+                        Typ: 0-5 (EZ), 0-1 (MZ), Near 0 (BZ & AZ & HZ)
+                    </p>
+                    <input
+                        type="text"
+                        value={phaeop}
+                        disabled
+                        style={{
+                            textAlign: "center",
+                            width: "100%",
+                            backgroundColor: "transparent", // Ensures background is transparent
+                        }}
+                        className="rounded-none text-white border-2 p-1 pt-3 pb-3"
+                    />
+
+                    <Slider
+                        defaultValue={0}
+                        onChange={(e) => handleInputChange(setPhaeop, e)}
+                        label=""
+                        maxValue={15}
+                        minValue={0}
+                        step={0.01}
+                    />
+                </div>
+
+                {selectedOption === "phosphate" && (
                     <>
                         <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
                             <h1 className="text-white font-bold text-center">
@@ -381,257 +638,8 @@ export default function Home() {
                                     handleInputChange(setChlorophyl, e)
                                 }
                                 label=""
-                                maxValue={50}
-                                minValue={-5}
-                                step={0.01}
-                            />
-                        </div>
-                        <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
-                            <h1 className="text-white font-bold  text-center">
-                                Phosphate (µmol/L)
-                            </h1>
-                            <p className="text-white font-normal text-sm">
-                                {" "}
-                                Typ: 0.1-1 (EZ), 1-2 (MZ), 2-3 (BZ), 4+ (AZ &
-                                HZ)
-                            </p>
-                            <input
-                                type="text"
-                                value={phosphate}
-                                disabled
-                                style={{
-                                    textAlign: "center",
-                                    width: "100%",
-                                    backgroundColor: "transparent",
-                                }}
-                                className="rounded-none text-white border-2 p-1 pt-3 pb-3"
-                            />
-
-                            <Slider
-                                defaultValue={0}
-                                onChange={handleSliderChange}
-                                label=""
-                                maxValue={6}
+                                maxValue={25}
                                 minValue={0}
-                                step={0.01}
-                            />
-                        </div>
-                    </>
-                )}
-
-                <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
-                    <h1 className="text-white font-bold  text-center">
-                        Potential Density (kg/m³)
-                    </h1>
-                    <p className="text-white font-normal text-sm">
-                        {" "}
-                        Typ: 19-24 (EZ), 24-27.5 (MZ), 27.5-28 (BZ), 28+ (AZ &
-                        HZ)
-                    </p>
-                    <input
-                        type="text"
-                        value={potentialDensity}
-                        disabled
-                        style={{
-                            textAlign: "center",
-                            width: "100%",
-                            backgroundColor: "transparent", // Ensures background is transparent
-                        }}
-                        className="rounded-none text-white border-2 p-1 pt-3 pb-3"
-                    />
-
-                    <Slider
-                        defaultValue={0}
-                        onChange={(e) =>
-                            handleInputChange(setPotentialDensity, e)
-                        }
-                        label=""
-                        maxValue={50}
-                        minValue={-5}
-                        step={0.01}
-                    />
-                </div>
-
-                {selectedOption === "chlorophyl" && (
-                    <>
-                        <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
-                            <h1 className="text-white font-bold text-center">
-                                Water Salinity (ppt)
-                            </h1>
-                            <p className="text-white font-normal text-sm">
-                                Typ: 30-36 (EZ), 34-35.5 (MZ), 34.5-35 (BZ),
-                                34.6-35 (AZ), 35+ (HZ)
-                            </p>
-                            <input
-                                type="text"
-                                value=""
-                                disabled
-                                style={{
-                                    textAlign: "center",
-                                    width: "100%",
-                                    backgroundColor: "transparent",
-                                }}
-                                className="rounded-none text-white border-2 p-1 pt-3 pb-3"
-                            />
-                            <Slider
-                                defaultValue={0}
-                                onChange={(value) => console.log(value)}
-                                maxValue={50}
-                                minValue={0}
-                                step={0.01}
-                            />
-                        </div>
-                        <div
-                            className="flex text-black flex-col gap-2 mt-20 w-[50%]"
-                        
-                        >
-                            <h1 className="text-white font-bold  text-center">
-                                Phosphate (µmol/L)
-                            </h1>
-                            <p className="text-white font-normal text-sm">
-                                {" "}
-                                Typ: 0.1-1 (EZ), 1-2 (MZ), 2-3 (BZ), 4+ (AZ &
-                                HZ)
-                            </p>
-                            <input
-                                type="text"
-                                value={value}
-                                disabled
-                                style={{
-                                    textAlign: "center",
-                                    width: "100%",
-                                    backgroundColor: "transparent",
-                                }}
-                                className="rounded-none text-white border-2 p-1 pt-3 pb-3"
-                            />
-
-                            <Slider
-                                defaultValue={0}
-                                onChange={handleSliderChange}
-                                label=""
-                                maxValue={6}
-                                minValue={0}
-                                step={0.01}
-                            />
-                        </div>
-                        <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
-                            <h1 className="text-white font-bold text-center">
-                                Oxygen Concentration (mL/L)
-                            </h1>
-                            <p className="text-white font-normal text-sm">
-                                Typ: 6-10 (EZ), 1-6 (MZ), 3-6 (BZ), 4-8 (AZ &
-                                HZ)
-                            </p>
-                            <input
-                                type="text"
-                                value=""
-                                disabled
-                                style={{
-                                    textAlign: "center",
-                                    width: "100%",
-                                    backgroundColor: "transparent",
-                                }}
-                                className="rounded-none text-white border-2 p-1 pt-3 pb-3"
-                            />
-                            <Slider
-                                defaultValue={0}
-                                onChange={(value) => console.log(value)}
-                                maxValue={50}
-                                minValue={0}
-                                step={0.01}
-                            />
-                        </div>
-                    </>
-                )}
-
-                <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
-                    <h1 className="text-white font-bold  text-center">
-                        Phaeophytin-a (µg/L)
-                    </h1>
-                    <p className="text-white font-normal text-sm">
-                        {" "}
-                        Typ: 0-5 (EZ), 0-1 (MZ), Near 0 (BZ & AZ & HZ)
-                    </p>
-                    <input
-                        type="text"
-                        value={phaeop}
-                        disabled
-                        style={{
-                            textAlign: "center",
-                            width: "100%",
-                            backgroundColor: "transparent", // Ensures background is transparent
-                        }}
-                        className="rounded-none text-white border-2 p-1 pt-3 pb-3"
-                    />
-
-                    <Slider
-                        defaultValue={0}
-                        onChange={(e) => handleInputChange(setPhaeop, e)}
-                        label=""
-                        maxValue={50}
-                        minValue={-5}
-                        step={0.01}
-                    />
-                </div>
-
-                {selectedOption === "phosphate" && (
-                    <>
-                        <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
-                            <h1 className="text-white font-bold text-center">
-                                Water Salinity (ppt)
-                            </h1>
-                            <p className="text-white font-normal text-sm">
-                                Typ: 30-36 (EZ), 34-35.5 (MZ), 34.5-35 (BZ),
-                                34.6-35 (AZ), 35+ (HZ)
-                            </p>
-                            <input
-                                type="text"
-                                value={waterSalinity}
-                                disabled
-                                style={{
-                                    textAlign: "center",
-                                    width: "100%",
-                                    backgroundColor: "transparent",
-                                }}
-                                className="rounded-none text-white border-2 p-1 pt-3 pb-3"
-                            />
-                            <Slider
-                                defaultValue={0}
-                                onChange={(e) => handleInputChange(setWaterSalinity, e)}
-                                maxValue={50}
-                                minValue={0}
-                                step={0.01}
-                            />
-                        </div>
-                        <div
-                            className="flex text-black flex-col gap-2 mt-20 w-[50%]"
-                        >
-                            <h1 className="text-white font-bold  text-center">
-                                Chlorophyll-a (µg/L)
-                            </h1>
-                            <p className="text-white font-normal text-sm">
-                                {" "}
-                                Typ: 0.10-20 (EZ), 0.01-0.1 (MZ), 0-0.01 (BZ),
-                                Near 0 (AZ & HZ)
-                            </p>
-                            <input
-                                type="text"
-                                value={chlorophyl}
-                                disabled
-                                style={{
-                                    textAlign: "center",
-                                    width: "100%",
-                                    backgroundColor: "transparent", // Ensures background is transparent
-                                }}
-                                className="rounded-none text-white border-2 p-1 pt-3 pb-3"
-                            />
-
-                            <Slider
-                                defaultValue={0}
-                                onChange={(e) => handleInputChange(setChlorophyl, e)}
-                                label=""
-                                maxValue={50}
-                                minValue={-5}
                                 step={0.01}
                             />
                         </div>
@@ -657,8 +665,10 @@ export default function Home() {
                             />
                             <Slider
                                 defaultValue={0}
-                                onChange={(e) => handleInputChange(setOxygenConc, e)}
-                                maxValue={50}
+                                onChange={(e) =>
+                                    handleInputChange(setOxygenConc, e)
+                                }
+                                maxValue={15}
                                 minValue={0}
                                 step={0.01}
                             />
@@ -690,9 +700,9 @@ export default function Home() {
                         defaultValue={0}
                         onChange={(e) => handleInputChange(setSilicate, e)}
                         label=""
-                        maxValue={50}
-                        minValue={-5}
-                        step={0.01}
+                        maxValue={125}
+                        minValue={0}
+                        step={1}
                     />
                 </div>
 
@@ -720,9 +730,9 @@ export default function Home() {
                         defaultValue={0}
                         onChange={(e) => handleInputChange(setNitrite, e)}
                         label=""
-                        maxValue={50}
-                        minValue={-5}
-                        step={0.01}
+                        maxValue={1.5}
+                        minValue={0}
+                        step={0.0001}
                     />
                 </div>
 
@@ -750,8 +760,8 @@ export default function Home() {
                         defaultValue={0}
                         onChange={(e) => handleInputChange(setNitrate, e)}
                         label=""
-                        maxValue={50}
-                        minValue={-5}
+                        maxValue={40}
+                        minValue={0}
                         step={0.01}
                     />
                 </div>
@@ -787,8 +797,9 @@ export default function Home() {
                 </div>
 
                 <div className="mt-2 mb-24">
-                    <button className="border-2 border-white text-white pr-12 pl-12 w-[280px] hover:bg-white hover:text-black transition-all duration-300 p-2 mt-24 "
-                    onClick={handleClick}
+                    <button
+                        className="border-2 border-white text-white pr-12 pl-12 w-[280px] hover:bg-white hover:text-black transition-all duration-300 p-2 mt-24 "
+                        onClick={handleClick}
                     >
                         GET PREDICTION
                     </button>
@@ -796,11 +807,11 @@ export default function Home() {
 
                 <h2>Your Results Are</h2>
                 <div className="mt-2 mb-24">
-                    <div className="border-2 border-white text-white pr-14 pl-14 w-[280px] p-2 pt-10 pb-10  ">
+                    <div className="border-2 border-white text-white pr-14 pl-14 w-[280px] p-2 pt-10 pb-10">
                         {predictRes}
                     </div>
                 </div>
-                <p>You are mostlikely askdkasd</p>
+                <p>You are mostlikely </p>
 
                 <div className="flex justify-center p-4">
                     <div className=" text-white p-6 w-[80%] md:w-[60%]">
@@ -808,7 +819,7 @@ export default function Home() {
                         <h3 className="text-xl font-semibold text-center">
                             How It Works
                         </h3>
-                        <p className="mt-4 text-center font-thin">
+                        <p className="mt-4 text-center text-xl font-thin">
                             This tool leverages advanced machine learning models
                             such as XGBoost and Linear Regression, optimized for
                             each variable to ensure the highest accuracy. By
@@ -820,7 +831,7 @@ export default function Home() {
                 </div>
                 <div className="flex justify-center p-4">
                     <div className=" text-white p-6 w-[80%] md:w-[60%]">
-                        <h3 className="text-xl font-semibold text-center">
+                        <h3 className="text-3xl font-semibold text-center">
                             About Sea Matrix
                         </h3>
                         <p className="mt-4 text-center font-thin">

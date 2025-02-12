@@ -15,8 +15,6 @@ export async function POST(request: Request) {
 
   try {
     const payload = await request.json();
-
-    // Forward the request to the external API
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
