@@ -552,7 +552,7 @@ export default function Home() {
 
                 <div className="flex text-black flex-col gap-2 mt-20 w-[50%]">
                     <h1 className="text-white font-bold  text-center">
-                    Phaeopigments (µg/L)
+                        Phaeopigments (µg/L)
                     </h1>
                     <p className="text-white font-normal text-sm">
                         {" "}
@@ -811,11 +811,9 @@ export default function Home() {
                         {predictRes}
                     </div>
                 </div>
-                <p>You are mostlikely </p>
 
                 <div className="flex justify-center p-4">
                     <div className=" text-white p-6 w-[80%] md:w-[60%]">
-                        {/* Card content */}
                         <h3 className="text-xl font-semibold text-center">
                             How It Works
                         </h3>
