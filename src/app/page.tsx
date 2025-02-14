@@ -66,11 +66,11 @@ export default function Home() {
               <p className="mt-1 text-center font-thin">Water Salinity
               </p>
 
-              <p className="mt-1 text-center font-thin">Phosphate Concentration
+              <p className="mt-1 text-center font-thin">Oxygen Concentration
               </p>
-              <p className="mt-1 text-center font-thin">Chlorophyll-a Levels
+              <p className="mt-1 text-center font-thin">Chlorophyll-a
               </p>
-              <p className="mt-1 text-center font-extralight">Oxygen Concentration
+              <p className="mt-1 text-center font-thin">Phosphate
               </p>
         </div>
         

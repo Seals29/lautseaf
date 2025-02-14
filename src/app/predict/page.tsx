@@ -192,6 +192,10 @@ export default function Home() {
                         (MZ), Bathypelagic Zone (BZ), Abyssopelagic Zone (AZ),
                         Hadal Zone (HZ)
                     </p>
+                        <br />
+                    <p className="text-center leading-10">
+                    This tool is trained on mesopelagic zone data and works best with data from the mesopelagic zone.
+                    </p>
                 </div>
 
                 {/* Slider component */}
