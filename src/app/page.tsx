@@ -1,8 +1,13 @@
 import Image from "next/image";
 import Navbar from "../components/navbar";
 import "../app/globals.css";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+  const movePage = () =>{
+    router.push("./predict");
+  }
   return (
     <div style={{ backgroundColor: '#000D1E', fontFamily: 'Poppins' }}>
       <Navbar />
@@ -24,7 +29,7 @@ export default function Home() {
               alt="SeaMatrix Logo"
               width={500}
               height={200}
-              objectFit="cover" // Ensures the image covers the entire container while maintaining its aspect ratio
+              objectFit="cover" 
             />
             <br />
             <span>Predict Key Ocean Constituents Instantly with SeaMatrix</span>
@@ -35,7 +40,9 @@ export default function Home() {
             <br />
             <br />
             <div className="p-2">
-            <button className="border-2 border-white text-white pr-14 pl-14  hover:bg-white hover:text-black transition-all duration-300 p-2">
+            <button className="border-2 border-white text-white pr-14 pl-14  hover:bg-white hover:text-black transition-all duration-300 p-2"
+            onClick={movePage}
+            >
   Start Predicting {'>'}
 </button>
             </div>
